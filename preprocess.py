@@ -332,7 +332,7 @@ def get_data(path, subject, dataset = 'BCI2a', classes_labels = 'all', LOSO = Fa
         for training, and 288 x 9 trials in session 2 for testing.  
         """
         if (dataset == 'BCI2a'):
-            path = path + 's{:}/'.format(subject+1)
+            # path = path + 's{:}/'.format(subject+1)
             X_train, y_train = load_BCI2a_data(path, subject+1, True)
             X_test, y_test = load_BCI2a_data(path, subject+1, False)
         elif (dataset == 'CS2R'):

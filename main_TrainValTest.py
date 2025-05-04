@@ -144,7 +144,8 @@ def train(dataset_conf, train_conf, results_path):
             filepath = results_path + '/saved models/run-{}'.format(train+1)
             if not os.path.exists(filepath):
                 os.makedirs(filepath)        
-            filepath = filepath + '/subject-{}.h5'.format(sub+1)
+            # filepath = filepath + '/subject-{}.h5'.format(sub+1)
+            filepath = filepath + '/subject-{}.weights.h5'.format(sub+1)
             
             # Create the model
             model = getModel(model_name, dataset_conf, from_logits)
@@ -371,7 +372,7 @@ def getModel(model_name, dataset_conf, from_logits = False):
 #%%
 def run():
     # Define dataset parameters
-    dataset = 'HGD' # Options: 'BCI2a','HGD', 'CS2R'
+    dataset = 'BCI2a' # Options: 'BCI2a','HGD', 'CS2R'
     
     if dataset == 'BCI2a': 
         in_samples = 1125
@@ -379,7 +380,8 @@ def run():
         n_sub = 9
         n_classes = 4
         classes_labels = ['Left hand', 'Right hand','Foot','Tongue']
-        data_path = os.path.expanduser('~') + '/BCI Competition IV/BCI Competition IV-2a/BCI Competition IV 2a mat/'
+        # data_path = os.path.expanduser('~') + '/BCI Competition IV/BCI Competition IV-2a/BCI Competition IV 2a mat/'
+        data_path = "/BCICIV-2a-mat/"
     elif dataset == 'HGD': 
         in_samples = 1125
         n_channels = 44
@@ -403,7 +405,7 @@ def run():
     # Create a folder to store the results of the experiment
     results_path = os.getcwd() + "/results"
     if not  os.path.exists(results_path):
-      os.makedirs(results_path)   # Create a new directory if it does not exist 
+        os.makedirs(results_path)   # Create a new directory if it does not exist 
       
     # Set dataset paramters 
     dataset_conf = { 'name': dataset, 'n_classes': n_classes, 'cl_labels': classes_labels,
@@ -414,7 +416,7 @@ def run():
                   'LearnCurves': True, 'from_logits': False, 'model':'ATCNet'}
            
     # Train the model
-    # train(dataset_conf, train_conf, results_path)
+    train(dataset_conf, train_conf, results_path)
 
     # Evaluate the model based on the weights saved in the '/results' folder
     model = getModel(train_conf.get('model'), dataset_conf)
